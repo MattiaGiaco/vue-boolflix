@@ -25,7 +25,7 @@ export default {
   methods:{
     search() {
       this.$emit('newSearch', this.searchText);
-      console.log(this.searchText);
+      //console.log(this.searchText);
     }
   }
 }
