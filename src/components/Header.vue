@@ -8,6 +8,7 @@
        type="text" 
        placeholder="Inserisci un titolo"
        v-model="searchText"
+       @keyup.enter="search"
       />
       <button @click="search">Cerca</button>
     </div>

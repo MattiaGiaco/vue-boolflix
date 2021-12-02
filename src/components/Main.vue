@@ -1,23 +1,37 @@
 <template>
   <main>
-    <div v-for="title in titleItems" :key="title.id" class="card">
-      <p>Titolo: {{title.title}}</p>
-      <p>Titolo originale: {{title.original_title}}</p>
-      <p>Lingua: {{title.original_language}}</p>
-      <p>Voto: {{title.vote_average}}</p>
-    </div>
+    
+    <Card 
+    v-for="film in titleItems.movie" 
+    :key="film.id"
+    :film="film" 
+    />
+ 
+    <!-- <Card 
+    v-for="serie in titleItems.tv" 
+    :key="serie.id" 
+    :serie="serie" 
+    />  -->
+    
   </main>
 </template>
 
 <script>
+
+import Card from './Card'
+
 export default {
   name: 'Main',
-  data() {
-    return {}
+  components: {
+    Card
   },
   props:{
-    titleItems: Array
+    titleItems: Object
+  },
+  computed: {
+    
   }
+
 }
 </script>
 
@@ -28,9 +42,5 @@ export default {
     height: calc(100vh - 70px);
     background-color: rgb(23, 23, 23);
     color: white;
-    .card{
-      width: 200px;
-      padding: 20px;
-    }
   }
 </style>
