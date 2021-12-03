@@ -4,25 +4,38 @@
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`" :alt="item.title || item.name">
+          <img 
+            :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`" 
+            :alt="item.title || item.name"
+          >
         </div>
         <div class="flip-card-back">
-          <h1>Titolo: {{item.title || item.name}}</h1>
-          <p>Titolo originale: {{item.original_title || item.original_name}}</p>
-          <p>
-            Lingua: 
-            <img class="flag" v-if="languageFlag() !== ''" :src="languageFlag()" :alt="item.original_language">
-          </p>
-          <p>
-            Voto: 
-            {{Math.round(item.vote_average/2)}}
-            <i
-              v-for="(star, index) in 5"
-              :key="index"
-              class="fa-star"
-              :class="index < Math.round(item.vote_average/2) ? 'fas' : 'far' ">
-            </i>
-          </p>
+          <div class="info">
+            <h2>Titolo: {{item.title || item.name}}</h2>
+            <p>Titolo originale: {{item.original_title || item.original_name}}</p>
+            <p>
+              Lingua: 
+              <img 
+                style="width:20px" 
+                v-if="languageFlag() !== ''" 
+                :src="languageFlag()" 
+                :alt="item.original_language"
+              >
+            </p>
+            <p>
+              Voto: 
+              {{Math.round(item.vote_average/2)}}
+              <i
+                v-for="(star, index) in 5"
+                :key="index"
+                class="fa-star"
+                :class="index < Math.round(item.vote_average/2) ? 'fas' : 'far' ">
+              </i>
+            </p>
+          </div>
+          <div class="overview">
+            <p>{{item.overview}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -48,7 +61,7 @@ export default {
       let img = '';
 
       if (language.toLowerCase().includes('it')) return img = require('../assets/img/it.png');
-      if (language.toLowerCase().includes('en')) return img = require('../assets/img/it.png');
+      if (language.toLowerCase().includes('en')) return img = require('../assets/img/en.png');
 
       return img;
     }
@@ -57,9 +70,7 @@ export default {
 </script>
 
 <style lang="scss">
-.flag{
-  width: 20px;
-}
+
 .card{
   width: 100%;
   padding: 20px;
@@ -110,8 +121,18 @@ export default {
 
 /* Style the back side */
 .flip-card-back {
-  background-color: dodgerblue;
+  background-color: black;
   color: white;
   transform: rotateY(180deg);
+  .info{
+    height: 50%;
+    p{
+      margin-top: 15px;
+    }
+  }
+  .overview{
+    overflow-y: scroll;
+    max-height: 50%;
+  }
 }
 </style>
