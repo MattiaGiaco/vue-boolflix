@@ -5,7 +5,10 @@
       <Loading title="Caricamento titoli..."/>
     </div>
     <div v-else >
-      <Main :titleItems="foundTitles" />
+      <Main 
+        :moviesArray="moviesArray" 
+        :seriesArray="seriesArray" 
+      />
     </div>
     
   </div>
@@ -34,14 +37,8 @@ export default {
         query: '',
         language: 'it-IT',
       },
-      media: {
-        movie: 'movie',
-        tv: 'tv'
-      },
-      foundTitles: {
-        movie: [],
-        tv: []
-      },
+      moviesArray: [],
+      seriesArray: [],
       isLoading: false
     }
   },
@@ -49,19 +46,31 @@ export default {
     searchTitle(title) {
       console.log('titolo inserito', title);
       this.apiParams.query = title;
-      this.getApi(this.media.movie);
-      this.getApi(this.media.tv);
+      this.getApi()
     },
-    getApi(media){
+    getApi(){
       this.isLoading = true;
-      axios.get(this.baseURL + media,{params:this.apiParams})
+      axios.get(this.baseURL + 'movie' ,{params:this.apiParams})
         .then(r => {
           //console.log(r);
-          console.log('media',media);
-          this.foundTitles[media] = r.data.results;
-          //console.log(this.foundTitles);
-          console.log('movies:',this.foundTitles.movie);
-          console.log('series:',this.foundTitles.tv);
+          
+          this.moviesArray = r.data.results;
+
+          console.log('moviesArray',this.moviesArray);
+          
+          this.isLoading = false
+
+        }).catch(error => {
+          console.log(error);
+        })
+
+      axios.get(this.baseURL + 'tv' ,{params:this.apiParams})
+        .then(r => {
+          //console.log(r);
+          
+          this.seriesArray = r.data.results;
+
+          console.log('seriesArray',this.seriesArray);
           
           this.isLoading = false
 

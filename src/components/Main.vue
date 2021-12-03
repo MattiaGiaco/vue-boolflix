@@ -2,16 +2,16 @@
   <main>
     
     <Card 
-    v-for="film in titleItems.movie" 
-    :key="film.id"
-    :film="film" 
+    v-for="item in moviesArray" 
+    :key="item.id"
+    :item="item" 
     />
  
-    <!-- <Card 
-    v-for="serie in titleItems.tv" 
-    :key="serie.id" 
-    :serie="serie" 
-    />  -->
+    <Card 
+    v-for="item in seriesArray" 
+    :key="item.id" 
+    :item="item" 
+    />  
     
   </main>
 </template>
@@ -26,9 +26,13 @@ export default {
     Card
   },
   props:{
-    titleItems: Object
+    moviesArray: Array,
+    seriesArray: Array
   },
   computed: {
+    
+  },
+  methods: {
     
   }
 
