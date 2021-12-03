@@ -1,17 +1,22 @@
 <template>
   <main>
-    
-    <Card 
-    v-for="item in moviesArray" 
-    :key="item.id"
-    :item="item" 
-    />
- 
-    <Card 
-    v-for="item in seriesArray" 
-    :key="item.id" 
-    :item="item" 
-    />  
+    <div class="film">
+      <h2>Film</h2>
+      <Card 
+      v-for="item in moviesArray" 
+      :key="item.id"
+      :item="item" 
+      />
+    </div>
+
+    <div class="serie">
+      <h2>Serie tv</h2>
+      <Card 
+      v-for="item in seriesArray" 
+      :key="item.id" 
+      :item="item" 
+      />  
+    </div>
     
   </main>
 </template>
@@ -29,12 +34,6 @@ export default {
     moviesArray: Array,
     seriesArray: Array
   },
-  computed: {
-    
-  },
-  methods: {
-    
-  }
 
 }
 </script>
