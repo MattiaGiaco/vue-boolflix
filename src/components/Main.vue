@@ -1,21 +1,12 @@
 <template>
   <main>
-    <div class="film">
-      <h2>Film</h2>
+    <div class="title-section">
+      <h2>{{titleSection}}</h2>
       <Card 
-      v-for="item in moviesArray" 
+      v-for="item in listResult" 
       :key="item.id"
       :item="item" 
       />
-    </div>
-
-    <div class="serie">
-      <h2>Serie tv</h2>
-      <Card 
-      v-for="item in seriesArray" 
-      :key="item.id" 
-      :item="item" 
-      />  
     </div>
     
   </main>
@@ -31,8 +22,8 @@ export default {
     Card
   },
   props:{
-    moviesArray: Array,
-    seriesArray: Array
+    listResult: Array,
+    titleSection: String
   },
 
 }
@@ -41,9 +32,12 @@ export default {
 <style lang="scss">
   main{
     display: flex;
-    flex-wrap: wrap;
-    height: calc(100vh - 70px);
-    background-color: rgb(23, 23, 23);
+    height: 50%;
     color: white;
+    .title-section{
+      display: flex;
+      
+      width: 100%;
+    }
   }
 </style>

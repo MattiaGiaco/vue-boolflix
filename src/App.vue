@@ -4,10 +4,13 @@
     <div v-if="isLoading" class="loading">
       <Loading title="Caricamento titoli..."/>
     </div>
-    <div v-else >
+    
+    <div v-else class="main">
       <Main 
-        :moviesArray="moviesArray" 
-        :seriesArray="seriesArray" 
+        :listResult="movie" titleSection="Film" 
+      />
+      <Main 
+        :listResult="tv" titleSection="Tv"
       />
     </div>
     
@@ -37,8 +40,9 @@ export default {
         query: '',
         language: 'it-IT',
       },
-      moviesArray: [],
-      seriesArray: [],
+      type: '',
+      movie: [],
+      tv: [],
       isLoading: false
     }
   },
@@ -46,31 +50,17 @@ export default {
     searchTitle(title) {
       console.log('titolo inserito', title);
       this.apiParams.query = title;
-      this.getApi()
+      this.getApi('movie')
+      this.getApi('tv')
     },
-    getApi(){
+    getApi(type){
       this.isLoading = true;
-      axios.get(this.baseURL + 'movie' ,{params:this.apiParams})
+      axios.get(this.baseURL + type ,{params:this.apiParams})
         .then(r => {
           //console.log(r);
           
-          this.moviesArray = r.data.results;
-
-          console.log('moviesArray',this.moviesArray);
-          
-          this.isLoading = false
-
-        }).catch(error => {
-          console.log(error);
-        })
-
-      axios.get(this.baseURL + 'tv' ,{params:this.apiParams})
-        .then(r => {
-          //console.log(r);
-          
-          this.seriesArray = r.data.results;
-
-          console.log('seriesArray',this.seriesArray);
+          this[type] = r.data.results;
+          console.log(type, this[type]);
           
           this.isLoading = false
 
@@ -78,7 +68,7 @@ export default {
           console.log(error);
         })
     }
-  }
+  },
 }
 </script>
 
@@ -87,6 +77,10 @@ export default {
 @import './assets/style/generals.scss';
 
 .loading{
+  height: calc(100vh - 70px);
+  background-color: rgb(23, 23, 23);
+}
+.main{
   height: calc(100vh - 70px);
   background-color: rgb(23, 23, 23);
 }

@@ -4,30 +4,30 @@
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+          <img :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`" :alt="item.title || item.name">
         </div>
         <div class="flip-card-back">
-          <h1>Titolo: {{item.title}}</h1>
-          <p>Titolo originale: {{item.original_title}}</p>
+          <h1>Titolo: {{item.title || item.name}}</h1>
+          <p>Titolo originale: {{item.original_title || item.original_name}}</p>
           <p>
             Lingua: 
-            <img v-if="languageFlag() !== ''" :src="languageFlag()" :alt="item.original_language">
+            <img class="flag" v-if="languageFlag() !== ''" :src="languageFlag()" :alt="item.original_language">
           </p>
-          <p>Voto: {{item.vote_average}}</p>
+          <p>
+            Voto: 
+            {{Math.round(item.vote_average/2)}}
+            <i
+              v-for="(star, index) in 5"
+              :key="index"
+              class="fa-star"
+              :class="index < Math.round(item.vote_average/2) ? 'fas' : 'far' ">
+            </i>
+          </p>
         </div>
       </div>
     </div>
   </div>
  
- <div class="card">
-    <p>Titolo: {{item.name}}</p>
-    <p>Titolo originale: {{item.original_name}}</p>
-    <p>
-      Lingua: 
-      <img v-if="languageFlag() !== ''" :src="languageFlag()" :alt="item.original_language" >
-    </p>
-    <p>Voto: {{item.vote_average}}</p>
-  </div> 
 </div>
 
 </template>
@@ -57,17 +57,19 @@ export default {
 </script>
 
 <style lang="scss">
-img{
+.flag{
   width: 20px;
 }
 .card{
-  width: 200px;
+  width: 100%;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .flip-card {
   background-color: transparent;
-  width: 300px;
-  height: 200px;
+  width: 250px;
+  height: 350px;
   border: 1px solid #f1f1f1;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
@@ -94,6 +96,10 @@ img{
   height: 100%;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* Style the front side (fallback if image is missing) */
